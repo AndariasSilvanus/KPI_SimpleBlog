@@ -80,7 +80,7 @@
                 </div>
                 <p><?php echo $f2; ?></p>
                 <p>
-                  <a href="\SimpleBlog/edit_post.php?id=<?php echo $f0 ?>">Edit</a> | <a href="javascript:DeletePost(<?php echo $f0 ?>)">Hapus</a>
+                  <a href="edit_post.php?id=<?php echo $f0 ?>">Edit</a> | <a href="javascript:DeletePost(<?php echo $f0 ?>)">Hapus</a>
                 </p>
             </li>
 

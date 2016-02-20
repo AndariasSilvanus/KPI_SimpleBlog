@@ -1,0 +1,132 @@
+CREATE TABLE `PM` (
+  `username` varchar(100) NOT NULL,   `pengirim` varchar(100) NOT NULL,
+  `isiPM` varchar(1024) NOT NULL,
+  KEY `PM_temp` (`username`),
+  CONSTRAINT `PM_temp` FOREIGN KEY (`username`) REFERENCES `user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE `registrations` (
+  `id` varchar(100) NOT NULL,   `username` varchar(50) NOT NULL,
+  `password` varchar(50) NOT NULL, `email` varchar(50) NOT NULL, `hash` varchar(50) NOT NULL,
+`active` int(5) NOT NULL, 
+  KEY `PM_temp` (`username`),
+  CONSTRAINT `PM_temp` FOREIGN KEY (`username`) REFERENCES `user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE `registrations` (
+`id` INT( 10 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+`username` VARCHAR( 32 ) NOT NULL ,
+`password` VARCHAR( 32 ) NOT NULL ,
+`email` TEXT NOT NULL ,
+`hash` VARCHAR( 32 ) NOT NULL ,
+`active` INT( 1 ) NOT NULL DEFAULT '0'
+) ENGINE = MYISAM ;
+
+CREATE TABLE `user` (
+  `username` varchar(100) NOT NULL primary key,   `password` varchar(100) NOT NULL,
+  `email` varchar(50) NOT NULL, `status` int (5) NOT NULL, `hash` varchar(50) NOT NULL
+);
+
+CREATE TABLE `user` (
+  `username` varchar(100) NOT NULL primary key,   `password` varchar(100) NOT NULL,
+  `level` varchar(50) NOT NULL, `first_name` varchar(50) NOT NULL, `surname` varchar(50), `address` varchar(50), `active` int (5)
+);
+
+DROP TABLE IF EXISTS `user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user` (
+  `username` varchar(255) NOT NULL DEFAULT '',
+  `password` varchar(255) DEFAULT NULL,
+  `level` int(11) DEFAULT NULL,
+  `first_name` varchar(255) DEFAULT NULL,
+  `surname` varchar(255) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `active` tinyint(1) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `user` VALUES ('','',3,'','','',1,''),('asdasdasddsdasd','',3,'','','',1,''),('helloa','',3,'','','',1,''),('opel','howard',3,'Willy','Susanto','Jalan Kapten Maulana Lubis 14C Medan, Indonesia',1,'opel_howard@gmail.com'),('opel2','howard',3,'Willy','Susanto','Medan',1,'willy@yahoo.com');
+
+INSERT INTO PM (username,pengirim, isiPM) VALUES ('andarias', 'opel', 'gan, ini message udah nyampe? tes tes');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CREATE TABLE `post` (
+`id` INT( 250 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+`judul` VARCHAR( 100 ) NOT NULL ,
+`konten` VARCHAR( 1000 ) NOT NULL ,
+`tanggal` DATE NOT NULL
+);
+
+
+CREATE TABLE `komentar` (
+`id_komentar` INT(250) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+`nama` VARCHAR (100) NOT NULL ,
+`email` VARCHAR (100) NOT NULL ,
+`tanggal` DATE NOT NULL ,
+`komentar` TEXT NOT NULL,
+`id` INT NOT NULL,
+FOREIGN KEY (`id`) REFERENCES post(id)
+);
+
+
+CREATE TABLE `komentar` (
+`id` INT NOT NULL,
+`nama` VARCHAR (100) NOT NULL ,
+`email` VARCHAR (100) NOT NULL ,
+`tanggal` DATE NOT NULL ,
+`komentar` TEXT NOT NULL,
+FOREIGN KEY (`id`) REFERENCES post(id)
+);
+
+
+INSERT INTO post (judul, konten, tanggal) VALUES ('Hello World!', 'This is my second experience in PHP!', '2014-10-10');
+
+INSERT INTO post (judul, konten, tanggal) VALUES ('Halo dunia', 'Ini pengalaman keduaku memakai PHP!', '2014-11-11');
+
+
+@mysql_select_db($database) or die( "Unable to select database");
+$query="SELECT * FROM tablename";
+$result=mysql_query($query);
+$num=mysql_numrows($result);
+mysql_close();
+?>
+
+
+<?php
+$i=0;
+while ($i < $num) 
+{
+$f1=mysql_result($result,$i,"field1");
+$f2=mysql_result($result,$i,"field2");
+$f3=mysql_result($result,$i,"field3");
+$f4=mysql_result($result,$i,"field4");
+$f5=mysql_result($result,$i,"field5");
+?>
+
+
+<form>
+	<input type="date" name="tanggal">
+</form>
+
+
+date('m/d/y', strtotime($_POST['tanggal']));

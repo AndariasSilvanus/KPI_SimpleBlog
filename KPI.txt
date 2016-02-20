@@ -1,0 +1,93 @@
+KPI
+
+Fitur:
+- Login & register (basic login component: username, pass, email)
+- Remember pass
+	- Tambah post
+- Tambah file/gambar
+	- Komentar (perbaiki ga usah masukin nama & email)
+
+
+File yg ditambahkan:
+- login.php (salt, simpen session)
+- register.php
+- session.php
+- forget_pass.php (kirim secure email)
+- upload_file.php (?)
+
+
+Yg perlu tambah session:
+- deletePost.php
+- edit_post.php
+- insert_comment.php
+- new_post.php
+- index.php (tambahin url edit&hapus kalo dah login utk post dr user itu)
+
+Sebelum login, siapapun bisa akses index yg berisi post2 dari setiap user
+Kalo mw tambah post, harus login dulu. Kalo blom login tp akses url, redirect ke login (session check)
+Pas login baru munculin tombol edit n hapus dari post yg dia buat
+
+=======================================Awal2==================================
+!!!!!!!pikirkan bentuk session yg ga gampang ditebak!!!!!
+
+//When he logs - store a session variable. Then in the beginning of every page
+session_start();
+if (!isset($_SESSION['nID'])) {
+    header("Location: login.php");
+    die(); //This prevents bots and savy users who know how to ignore browser headers from getting into the page and causing problems. It also allows the page to stop executing the rest of the page and to save resources. Its also noteworthy that $_SESSION['nID'] can be swapped out for any other variable you are using to store usernames or id's.
+}
+//If the login is ok
+session_start();
+$_SESSION['nID'] = 1; //example
+
+1. Start a session: session_start()
+2. If Session["user"] == null, redirect to the login page, else continue.
+3. In the login page, ask the user for password using a form
+4. Post this form to the login page
+5. Check against your authentication service (e.g. a table in mysql) if the user is authorized
+6. If yes, Session["user"] = $userName, redirect the user to the page. If no, prompt for password again
+
+
+==========================================Login/register===============================
+1. hash (SHA-256) password
+2. POST username & pass (tapi gmna kalo paket dirusak? availability issue)
+
+
+========================================Remember pass===============================
+1. Generate random the_pass
+2. Store ke DB hash(the_pass) utk username tsb
+3. Kirim secure email dengan isi the_pass
+
+
+======================================session===================================
+includeme.php:
+	$x = 5;
+	return $x;
+
+main.php:
+	$myX = (include 'includeme.php');
+
+
+Lindungi dari SQL injection & XSS
+
+
+Yg belum terbayang:
+- Insecure Direct Object References 
+- Cross Site Request Forgery (CSRF) 
+- Security Misconfiguration
+- Insecure Cryptographic Storage
+- Insufficient Transport Layer Protection
+- Unvalidated Redirects and Forwards 
+
+Yg sudah terbayang:
+- Injection
+- XSS
+- Broken authentication and session management
+- Failure to restrict URL access
+
+
+=======================================================================
+untuk login & session:
+http://www.formget.com/login-form-in-php/
+http://stackoverflow.com/questions/1594206/php-prevent-users-from-accessing-a-page-while-not-logged-in
+

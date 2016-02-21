@@ -48,15 +48,23 @@ $_SESSION['nID'] = 1; //example
 6. If yes, Session["user"] = $userName, redirect the user to the page. If no, prompt for password again
 
 
-==========================================Login/register===============================
-1. hash (SHA-256) password
-2. POST username & pass (tapi gmna kalo paket dirusak? availability issue)
+==========================================Login===============================
+1. client: POST username & pass dengan HTTPS connection (tapi gmna kalo paket dirusak? availability issue)
+2. server: receive username & pass, lalu hash256(pass+salt)
+3. server: compare with database utk username tsb
+	kalo bener, redirect ke hal index yg dengan session (?)
+	kalo salah, kasih tau kalo itu salah ke client
+
+
+==========================================Register===============================
+1. client: POST username, pass, & email dengan HTTPS connection
+2. server: receive ketiganya, lalu hash256(pass+salt) dan masukkan ke DB dengan username tsb
 
 
 ========================================Remember pass===============================
 1. Generate random the_pass
 2. Store ke DB hash(the_pass) utk username tsb
-3. Kirim secure email dengan isi the_pass
+3. Kirim secure email dengan isi the_pass (koneksi bagaimana kalo secure email? secure email di enkripkah?)
 
 
 ======================================session===================================
@@ -68,12 +76,15 @@ main.php:
 	$myX = (include 'includeme.php');
 
 
+=========================================================================
+
+
 Lindungi dari SQL injection & XSS
 
 
 Yg belum terbayang:
 - Insecure Direct Object References 
-- Cross Site Request Forgery (CSRF) 
+- Cross Site Request Forgery (CSRF) -> sama kaya XSS kah penanganannya?
 - Security Misconfiguration
 - Insecure Cryptographic Storage
 - Insufficient Transport Layer Protection
@@ -91,3 +102,5 @@ untuk login & session:
 http://www.formget.com/login-form-in-php/
 http://stackoverflow.com/questions/1594206/php-prevent-users-from-accessing-a-page-while-not-logged-in
 
+untuk register:
+http://stackoverflow.com/questions/1154172/how-to-send-https-posts-using-php

@@ -5,7 +5,7 @@ function check_session($username){
 	session_start();
 
 	// belum login, session kosong
-	if (!isset($_SESSION['nID'])) {
+	if (!isset($_SESSION['login_user'])) {
 	    header("Location: login.php");
 	    die(); 
 	    //This prevents bots and savy users who know how to ignore browser headers from getting into 
@@ -15,7 +15,7 @@ function check_session($username){
 	    //you are using to store usernames or id's
 	}
 	else {
-		if ($_SESSION['nID'] == $username)
+		if ($_SESSION['login_user'] == $username)
 			return true;
 		else
 			return false;

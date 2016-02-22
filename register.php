@@ -48,6 +48,10 @@
 			}
 			else {
 				$query_insert = mysql_query("insert into user (username, password, email) VALUES ('$username', '$password_hashed', '$email')", $connection);
+				if (!$query_insert)
+					die('Invalid query: ' . mysql_error());
+				else
+					echo '<br><h3>Register success!</h3>';
 			}
 			mysql_close($connection); // Closing Connection
 		}

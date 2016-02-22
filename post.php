@@ -43,6 +43,7 @@
     $judul = $row['judul'];
     $tanggal = $row['tanggal'];
     $konten = $row['konten'];
+    $gambar = $row['gambar'];
     mysql_close();
 ?>
 
@@ -69,9 +70,10 @@
     <div class="art-body">
         <div class="art-body-inner">
             <hr class="featured-article" />
-            <p><?php echo $konten ?></p>
-
+            <p><?php echo $konten ?> </p>
             <hr />
+
+            <img src= "<?php echo rawurldecode($gambar) ?>" > </img>
             
             <h2>Komentar</h2>
 

@@ -38,12 +38,21 @@
 			$query = mysql_query("select * from user where password='$password_hashed' AND username='$username'", $connection);
 			$rows = mysql_num_rows($query);
 			if ($rows == 1) {
+				$name = "login_user";
+				$time_now = time();
+				$date_now = date('Y-m-d');
+				$microtime = microtime();
+				$value = $username.$password.$password_hashed.$time_now.$date_now.$microtime;
+				$value = hash('sha256', $value);
+
 				// Initializing Session
-				$_SESSION['login_user']=$username; 
+				// $result = $connection->query($query);
+				// $row = $result->fetch_assoc();
+				$row = mysql_fetch_assoc($query);
+				$_SESSION["username"]=$username;
+				$_SESSION["user_id"]=$row["id"];
 
 				// Set HTTP Only Cookies
-				$name = "cookie_name";
-				$value = "";
 				$expire = NULL;	//default
 				$path = NULL;
 				$domain = NULL;

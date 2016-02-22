@@ -37,7 +37,11 @@
 <body class="default">
 	
 <?php
-    include ('connectDB.php');
+  session_start();
+  
+  $isLogin = isset($_SESSION["username"]);
+
+  include ('connectDB.php');
    
    // Query to display list post
    $query="SELECT * FROM `post`;";
@@ -52,7 +56,10 @@
     <a style="border:none;" id="logo" href="index.php"><h1>Simple<span>-</span>Blog</h1></a>
     <ul class="nav-primary">
         <li><a href="new_post.php">+ Tambah Post</a></li>
-		<li><a href="aboutMe.php">About Me</a></li>
+		    <li><a href="aboutMe.php">About Me</a></li>
+        <?php if($isLogin) {?>
+        <li>Welcome <?php echo $_SESSION["username"]; ?></li>
+        <?php } ?>
     </ul>
 </nav>
 

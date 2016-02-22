@@ -1,4 +1,5 @@
 <?php
+    session_start();
     include ('connectDB.php');
 
     // Ambil dari form
@@ -58,7 +59,8 @@
     
     
     //simpan data ke database
-    $query = mysql_query("insert into post (judul, konten, tanggal,gambar,userid) values('$judul', '$konten', '$tanggal','$target_file',1)") or die(mysql_error());
+    $userid = $_SESSION["user_id"];
+    $query = mysql_query("insert into post (judul, konten, tanggal,gambar,userid) values('$judul', '$konten', '$tanggal','$target_file',$userid)") or die(mysql_error());
 
     if($query)
     {

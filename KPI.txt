@@ -2,7 +2,7 @@ KPI
 
 Fitur:
 - Login & register (basic login component: username, pass, email)
-- Remember pass
+- Remember me
 	- Tambah post
 - Tambah file/gambar
 	- Komentar (perbaiki ga usah masukin nama & email)

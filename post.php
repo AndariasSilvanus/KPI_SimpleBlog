@@ -35,6 +35,8 @@
 </head>
 
 <?php
+    session_start();
+    $isLogin = isset($_SESSION["username"]);
     include ('connectDB.php');
     $id_post = $_GET['id'];
     $query = mysql_query("SELECT * FROM post WHERE id = '$id_post'") or die(mysql_error());
@@ -53,7 +55,16 @@
 <nav class="nav">
     <a style="border:none;" id="logo" href="index.php"><h1>Simple<span>-</span>Blog</h1></a>
     <ul class="nav-primary">
+        <?php if($isLogin) {?>
         <li><a href="new_post.php">+ Tambah Post</a></li>
+        <!-- <li><a href="aboutMe.php">About Me</a></li> -->
+        <li>Welcome <?php echo $_SESSION["username"]; ?></li>
+        <li><a href="logout.php">Logout</a></li>
+        <?php }
+        else {?>
+        <li><a href="login_page.php">Login</a></li>
+        <li><a href="register_page.php">Register</a></li>
+        <?php } ?>
     </ul>
 </nav>
 
@@ -75,6 +86,10 @@
 
             <img src= "<?php echo rawurldecode($gambar) ?>" > </img>
             
+            <?php 
+                if ($isLogin) {
+            ?>
+
             <h2>Komentar</h2>
 
             <div id="contact-area">
@@ -95,6 +110,8 @@
 
             <ul class="art-list-body" id="ListKomentar">
             </ul>
+
+            <?php } ?>
         </div>
     </div>
 

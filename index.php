@@ -63,6 +63,7 @@
         <?php }
         else {?>
         <li><a href="login_page.php">Login</a></li>
+        <li><a href="register_page.php">Register</a></li>
         <?php } ?>
     </ul>
 </nav>

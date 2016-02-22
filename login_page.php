@@ -3,8 +3,8 @@
 
 	// If session is set, redirect to index.php
 	if(isset($_SESSION["username"])){
-		//header("location: index.php");
-		echo "<h2>username ter set:".$_SESSION["username"]."</h2>";
+		header("location: index.php");
+		//echo "<h2>username ter set:".$_SESSION["username"]."</h2>";
 	}
 ?>
 

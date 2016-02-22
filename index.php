@@ -55,10 +55,14 @@
 <nav class="nav">
     <a style="border:none;" id="logo" href="index.php"><h1>Simple<span>-</span>Blog</h1></a>
     <ul class="nav-primary">
-        <li><a href="new_post.php">+ Tambah Post</a></li>
-		    <li><a href="aboutMe.php">About Me</a></li>
         <?php if($isLogin) {?>
+        <li><a href="new_post.php">+ Tambah Post</a></li>
+        <!-- <li><a href="aboutMe.php">About Me</a></li> -->
         <li>Welcome <?php echo $_SESSION["username"]; ?></li>
+        <li><a href="logout.php">Logout</a></li>
+        <?php }
+        else {?>
+        <li><a href="login_page.php">Login</a></li>
         <?php } ?>
     </ul>
 </nav>
@@ -77,6 +81,7 @@
       					$f1=mysql_result($result,$i,"judul");
       					$f2=mysql_result($result,$i,"konten");
       					$f3=mysql_result($result,$i,"tanggal");
+                $f4=mysql_result($result,$i,"userid");
             ?>
           	
             <li class="art-list-item">
@@ -86,9 +91,11 @@
                     <div class="art-list-time"><span style="color:#F40034;">&#10029;</span> Featured</div>
                 </div>
                 <p><?php echo $f2; ?></p>
+                <?php if(($isLogin) && ($f4 == $_SESSION["user_id"])) {?>
                 <p>
                   <a href="edit_post.php?id=<?php echo $f0 ?>">Edit</a> | <a href="javascript:DeletePost(<?php echo $f0 ?>)">Hapus</a>
                 </p>
+                <?php } ?>
             </li>
 
             <?php

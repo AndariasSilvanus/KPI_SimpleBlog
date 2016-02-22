@@ -53,7 +53,7 @@
             <h2>Tambah Post</h2>
 
             <div id="contact-area">
-                <form method="POST" action="inputDB.php" id="newPost" name="form" enctype="multipart/form-data" onsubmit="return ValidateForm()">
+                <form method="POST" action="inputDB.php" id="newPost" name="form" enctype="multipart/form-data" vonsubmit="return ValidateForm()">
                     <label for="Judul">Judul:</label>
                     <input type="text" name="Judul" id="Judul">
 
@@ -65,7 +65,7 @@
 
                     Select image to upload:
                     <input type="file" name="fileToUpload" id="fileToUpload">
-                    <input type="submit" value="Upload Image" name="submit">
+                    <!-- <input type="submit" value="Upload Image" name="submit"> -->
 
                     <input type="submit" name="submit" value="Simpan" class="submit-button">
 

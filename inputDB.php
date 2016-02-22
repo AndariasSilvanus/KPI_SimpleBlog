@@ -60,10 +60,10 @@
     //simpan data ke database
     $query = mysql_query("insert into post (judul, konten, tanggal,gambar,userid) values('$judul', '$konten', '$tanggal','$target_file',1)") or die(mysql_error());
 
-    // if($query)
-    // {
-    //     header('location:index.php');
-    // }
+    if($query)
+    {
+        header('location:index.php');
+    }
 
     // close DB
     mysql_close();

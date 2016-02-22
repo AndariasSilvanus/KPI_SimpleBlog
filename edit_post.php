@@ -39,12 +39,14 @@
     $id_post = $_GET['id'];
     //$id_length = strlen ($id_post);
     //$id_post = $_GET['id'][$id_length-2];
+    //
     $query = mysql_query("SELECT * FROM post WHERE id = '$id_post'") or die(mysql_error());
     $row = mysql_fetch_assoc($query);
     $id_post = $row['id'];
     $judul = $row['judul'];
     $tanggal = $row['tanggal'];
     $konten = $row['konten'];
+    $gambar = $row['gambar'];
     mysql_close();
 ?>
 
@@ -67,7 +69,7 @@
             <h2>Edit Post</h2>
 
             <div id="contact-area">
-                <form method="POST" action="saveeditpost.php?id=<?php echo $id_post ?>" onsubmit="return ValidateForm(this)">
+                <form method="POST" action="saveeditpost.php?id=<?php echo $id_post ?>" enctype="multipart/form-data" onsubmit="return ValidateForm(this)">
                     <label for="Judul">Judul:</label>
                     <input type="text" name="Judul" id="Judul" value="<?php echo $judul ?>">
 
@@ -76,6 +78,9 @@
                     
                     <label for="Konten">Konten:</label><br>
                     <textarea name="Konten" rows="20" cols="20" id="Konten"> <?php echo $konten ?> </textarea>
+
+                    Select image to upload:
+                    <input type="file" name="fileToUpload" id="fileToUpload" value="<?php echo $gambar ?>">
 
                     <input type="submit" name="submit" value="Simpan" class="submit-button">
                 </form>

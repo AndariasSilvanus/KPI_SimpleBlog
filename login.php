@@ -50,10 +50,11 @@
 				$time_now = time();
 				$date_now = date('Y-m-d');
 				$microtime = microtime();
-				$value = $username.$password.$password_hashed.$time_now.$date_now.$microtime;
+				$host = gethostname();
+				$value = $username.$host.$time_now.$date_now.$microtime;
 				$value = hash('sha256', $value);
 				echo "<h3>".$value."</h3>";
-				$expire = NULL;	//default
+				$expire = time()+3600*24*365*10;	//default
 				$path = NULL;
 				$domain = NULL;
 				$secure = TRUE;	// Indicates that the cookie should only be transmitted over a secure HTTPS connection from the client
@@ -62,7 +63,7 @@
 				
 				// Store Cookies to database
 				$query_update = mysql_query("UPDATE user SET token ='$value' WHERE id=$user_id", $connection);
-				
+
 				$name = "username";
 				$value = $username;
 				setcookie($name, $value, $expire, $path, $domain, $secure, $httponly);

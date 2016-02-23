@@ -114,7 +114,7 @@
                     <input hidden type="text" name="Nama" id="Nama" value= "<?php echo $_SESSION["username"] ?>" >
         
                     <label hidden for="Email">Email:</label>
-                    <input hidden type="text" name="Email" id="Email" value= "aaaaa@gmail.com">
+                    <input hidden type="text" name="Email" id="Email" value= "<?php echo $_SESSION["email"] ?>">
                     
                     <label for="Komentar">Komentar:</label><br>
                     <textarea name="Komentar" rows="20" cols="20" id="Komentar"></textarea>

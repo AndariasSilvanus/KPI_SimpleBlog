@@ -1,5 +1,10 @@
 <?php
 	include 'hash.php';
+	include('session.php');
+    include ('preventSQLInject.php');
+
+    $isLogin = checkToGenerateSession();
+    
 
 	session_start(); // Starting Session
 	$error=''; // Variable To Store Error Message

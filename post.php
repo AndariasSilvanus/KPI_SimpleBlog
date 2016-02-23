@@ -94,11 +94,11 @@
 
             <div id="contact-area">
                 <form method="POST" id="FormKomentar" action="#" onsubmit="return false">
-                    <label for="Nama">Nama:</label>
-                    <input type="text" name="Nama" id="Nama">
+                    <label hidden for="Nama">Nama:</label>
+                    <input hidden type="text" name="Nama" id="Nama" value= "<?php echo $_SESSION["username"] ?>" >
         
-                    <label for="Email">Email:</label>
-                    <input type="text" name="Email" id="Email">
+                    <label hidden for="Email">Email:</label>
+                    <input hidden type="text" name="Email" id="Email" value= "aaaaa@gmail.com">
                     
                     <label for="Komentar">Komentar:</label><br>
                     <textarea name="Komentar" rows="20" cols="20" id="Komentar"></textarea>

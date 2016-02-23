@@ -35,18 +35,34 @@
 </head>
 
 <?php
-    session_start();
-    $isLogin = isset($_SESSION["username"]);
     include ('connectDB.php');
-    $id_post = $_GET['id'];
-    $query = mysql_query("SELECT * FROM post WHERE id = '$id_post'") or die(mysql_error());
-    $row = mysql_fetch_assoc($query);   // untuk hitung berapa banyak post yang ada di database
-    $id_post = $row['id'];
-    $judul = $row['judul'];
-    $tanggal = $row['tanggal'];
-    $konten = $row['konten'];
-    $gambar = $row['gambar'];
-    mysql_close();
+    include('session.php');
+    include ('preventSQLInject.php');
+
+    $isLogin = checkToGenerateSession();
+
+    // Cek apakah id tersedia atau tidak
+    if (isset($_GET['id'])) {
+        $id_post = $_GET['id'];
+        $query = "SELECT * FROM post WHERE id = $id_post";
+        $query = preventSQLInject($query);
+        $res = mysql_query($query);
+        $rows = mysql_num_rows($res);
+
+        if ($res && $rows==1) {
+            $row = mysql_fetch_assoc($res);   // untuk hitung berapa banyak post yang ada di database
+            $id_post = $row['id'];
+            $judul = $row['judul'];
+            $tanggal = $row['tanggal'];
+            $konten = $row['konten'];
+            $gambar = $row['gambar'];
+            mysql_close();
+        }
+        else
+            header("location: error_page.php");
+    }
+    else
+        header("location: error_page.php");
 ?>
 
 <body class="default" onload="Show_Comment(<?php echo $id_post ?>)">

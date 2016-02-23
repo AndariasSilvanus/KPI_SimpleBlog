@@ -8,6 +8,37 @@ Fitur:
 	- Komentar (perbaiki ga usah masukin nama & email)
 
 
+<script>alert(document.cookie);</script>
+
+
+
+- komentar dapetin username & email dr cookie
+- upload image redam threat
+- penanganan xss & sql injection di smua file
+
+Anda
+- pake cookie buat remember me
+  	cek kesamaan cookie, kalo sama, generate session 
+  		setiap halaman diakses, cek apa punya cookie ato engga. 
+  		kalo punya, bandingkan dengan cookie yg disimpen di server (cookie juga punya data username)
+  			kalo sama, generate cookie baru, simpen lagi di DB, generate session di server
+  			kalo ga, ga kasih akses
+  		kalo ga punya, yaudah ga kasih akses
+- edit post dengan ganti URL
+- salt disesuaikan spesifik per user
+
+Rita
+
+
+Page yg terdisplay:
+- index.php
+- post.php
+- edit_post.php
+- login_page.php
+- register_page.php
+
+
+
 File yg ditambahkan:
 - login.php (salt, simpen session)
 - register.php

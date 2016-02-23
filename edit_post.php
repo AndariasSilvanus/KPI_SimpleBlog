@@ -36,18 +36,57 @@
 
 <?php
     include ('connectDB.php');
-    $id_post = $_GET['id'];
-    //$id_length = strlen ($id_post);
-    //$id_post = $_GET['id'][$id_length-2];
-    //
-    $query = mysql_query("SELECT * FROM post WHERE id = '$id_post'") or die(mysql_error());
-    $row = mysql_fetch_assoc($query);
-    $id_post = $row['id'];
-    $judul = $row['judul'];
-    $tanggal = $row['tanggal'];
-    $konten = $row['konten'];
-    $gambar = $row['gambar'];
-    mysql_close();
+    include('session.php');
+    include ('preventSQLInject.php');
+
+    $isLogin = checkToGenerateSession();
+
+    // Cek sudah login atau belum
+    if ($isLogin) {
+        // Cek apakah id tersedia atau tidak
+        if (isset($_GET['id'])) {
+            $user_id = $_SESSION["user_id"];
+            $id_post = $_GET['id'];
+            // Cek apakah username bersangkutan emg yg ngebuat post tsb atau ga
+            $query = "SELECT b.id, b.judul, b.tanggal, b.konten, b.gambar FROM user a, post b WHERE a.id=b.userid AND b.id=$id_post";
+            $query = preventSQLInject($query);
+            $res = mysql_query($query);
+
+            // $query = mysql_query("SELECT * FROM post WHERE id = '$id_post'");
+            // $query = preventSQLInject($query);
+
+            if ($res) {
+                $rows = mysql_num_rows($res);
+                // Jika hasil record SELECT == 1, maka betul itu adalah postnya user tsb
+                if ($rows == 1) {
+                    $row = mysql_fetch_assoc($res);
+                    $id_post = $row['id'];
+                    $judul = $row['judul'];
+                    $tanggal = $row['tanggal'];
+                    $konten = $row['konten'];
+                    $gambar = $row['gambar'];
+                    mysql_close();
+                    $isTruePost = TRUE;
+                }
+                else {
+                    header("location: error_page.php");
+                    $isTruePost = FALSE;
+                }
+            }
+            else {
+                header("location: error_page.php");
+                $isTruePost = FALSE;
+            }
+        }
+        else {
+            header("location: error_page.php");
+            $isTruePost = FALSE;
+        }
+    }
+    else {
+        header("location: login_page.php");
+        $isTruePost = FALSE;
+    }
 ?>
 
 <body class="default">
@@ -56,7 +95,16 @@
 <nav class="nav">
     <a style="border:none;" id="logo" href="index.php"><h1>Simple<span>-</span>Blog</h1></a>
     <ul class="nav-primary">
+        <?php if($isLogin) {?>
         <li><a href="new_post.php">+ Tambah Post</a></li>
+        <!-- <li><a href="aboutMe.php">About Me</a></li> -->
+        <li>Welcome <?php echo $_SESSION["username"]; ?></li>
+        <li><a href="logout.php">Logout</a></li>
+        <?php }
+        else {?>
+        <li><a href="login_page.php">Login</a></li>
+        <li><a href="register_page.php">Register</a></li>
+        <?php } ?>
     </ul>
 </nav>
 
@@ -68,6 +116,7 @@
         <div class="art-body-inner">
             <h2>Edit Post</h2>
 
+            <?php if($isTruePost) {?>
             <div id="contact-area">
                 <form method="POST" action="saveeditpost.php?id=<?php echo $id_post ?>" enctype="multipart/form-data" onsubmit="return ValidateForm(this)">
                     <label for="Judul">Judul:</label>
@@ -85,6 +134,7 @@
                     <input type="submit" name="submit" value="Simpan" class="submit-button">
                 </form>
             </div>
+            <?php } ?>
         </div>
     </div>
 

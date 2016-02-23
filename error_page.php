@@ -36,37 +36,11 @@
 
 <body class="default">
 	
-<?php
-  include('session.php');
-  include ('connectDB.php');
-  include ('preventSQLInject.php');
-
-  $isLogin = checkToGenerateSession();
-   
-   // Query to display list post
-   $query="SELECT * FROM `post`;";
-   $query = preventSQLInject($query);
-   $result=mysql_query($query) or trigger_error(mysql_error()." in ".$query);
-   
-   $num=mysql_num_rows($result);
-?>
 	
 <div class="wrapper">
 
 <nav class="nav">
     <a style="border:none;" id="logo" href="index.php"><h1>Simple<span>-</span>Blog</h1></a>
-    <ul class="nav-primary">
-        <?php if($isLogin) {?>
-        <li><a href="new_post.php">+ Tambah Post</a></li>
-        <!-- <li><a href="aboutMe.php">About Me</a></li> -->
-        <li>Welcome <?php echo $_SESSION["username"]; ?></li>
-        <li><a href="logout.php">Logout</a></li>
-        <?php }
-        else {?>
-        <li><a href="login_page.php">Login</a></li>
-        <li><a href="register_page.php">Register</a></li>
-        <?php } ?>
-    </ul>
 </nav>
 
 <div id="home">
@@ -74,37 +48,9 @@
         <nav class="art-list">
           <ul class="art-list-body">
           	
-          	<?php
-          		// Display List Post using while
-      				$i=0;
-      				while ($i < $num) 
-      				{
-						    $f0=mysql_result($result,$i,"id");
-      					$f1=mysql_result($result,$i,"judul");
-      					$f2=mysql_result($result,$i,"konten");
-      					$f3=mysql_result($result,$i,"tanggal");
-                $f4=mysql_result($result,$i,"userid");
-            ?>
-          	
-            <li class="art-list-item">
-                <div class="art-list-item-title-and-time">
-                    <h2 class="art-list-title"><a href="post.php?id=<?php echo $f0 ?>"><?php echo $f1; ?></a></h2>
-                    <div class="art-list-time"><?php echo $f3; ?></div>
-                    <div class="art-list-time"><span style="color:#F40034;">&#10029;</span> Featured</div>
-                </div>
-                <p><?php echo $f2; ?></p>
-                <?php if(($isLogin) && ($f4 == $_SESSION["user_id"])) {?>
-                <p>
-                  <a href="edit_post.php?id=<?php echo $f0 ?>">Edit</a> | <a href="javascript:DeletePost(<?php echo $f0 ?>)">Hapus</a>
-                </p>
-                <?php } ?>
-            </li>
+            <br>
+          	<h1 style="margin-top:20px; margin-bottom:40px;">PAGE NOT FOUND</h1>
 
-            <?php
-            	// Cont. from "Display list post using while"
-            		$i++;
-				      }
-            ?>
           </ul>
         </nav>
     </div>

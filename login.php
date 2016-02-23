@@ -35,33 +35,40 @@
 			$db = mysql_select_db($db_name, $connection);
 			
 			// SQL query to fetch information of registerd users and finds user match.
-			$query = mysql_query("select * from user where password='$password_hashed' AND username='$username'", $connection);
+			$query = mysql_query("SELECT * FROM user WHERE password='$password_hashed' AND username='$username'", $connection);
 			$rows = mysql_num_rows($query);
 			if ($rows == 1) {
-				$name = "login_user";
+				// Initializing Session
+				$row = mysql_fetch_assoc($query);
+				$_SESSION["username"]=$username;
+				$user_id = $row["id"];
+				$_SESSION["user_id"]=$user_id;
+				$_SESSION["email"]=$row["email"];
+
+				// Set HTTP Only Cookies
+				$name = "remember_me";
 				$time_now = time();
 				$date_now = date('Y-m-d');
 				$microtime = microtime();
 				$value = $username.$password.$password_hashed.$time_now.$date_now.$microtime;
 				$value = hash('sha256', $value);
-
-				// Initializing Session
-				// $result = $connection->query($query);
-				// $row = $result->fetch_assoc();
-				$row = mysql_fetch_assoc($query);
-				$_SESSION["username"]=$username;
-				$_SESSION["user_id"]=$row["id"];
-
-				// Set HTTP Only Cookies
+				echo "<h3>".$value."</h3>";
 				$expire = NULL;	//default
 				$path = NULL;
 				$domain = NULL;
 				$secure = TRUE;	// Indicates that the cookie should only be transmitted over a secure HTTPS connection from the client
 				$httponly = TRUE;
 				setcookie($name, $value, $expire, $path, $domain, $secure, $httponly);
+				
+				// Store Cookies to database
+				$query_update = mysql_query("UPDATE user SET token ='$value' WHERE id=$user_id", $connection);
+				
+				$name = "username";
+				$value = $username;
+				setcookie($name, $value, $expire, $path, $domain, $secure, $httponly);
 
 				// Redirecting To Other Page
-				header("location: index.php"); 
+				//header("location: index.php"); 
 			}
 			else {
 				$error = "Username or Password is invalid";

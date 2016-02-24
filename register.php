@@ -1,12 +1,8 @@
 <?php
 	include 'hash.php';
-	include('session.php');
     include ('preventSQLInject.php');
-
-    $isLogin = checkToGenerateSession();
     
-
-	session_start(); // Starting Session
+    //session_start();
 	$error=''; // Variable To Store Error Message
 
 	if (isset($_POST['submit'])) {

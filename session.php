@@ -16,13 +16,17 @@ function check_cookie(){
 		// echo "<b>USERNAME: </b>".$username."<br>";
 		// echo "<b>TOKEN: </b>".$cookie."<br>";
 		$connection = establishCon();
+		// mysql_select_db("simple_blog", $connection);
 		$query = mysql_query("SELECT * FROM user WHERE username='$username' AND token='$cookie'", $connection);
 		$rows = mysql_num_rows($query);
 		if ($rows == 1) {
+			// mysql_close($connection);
 			return TRUE;
 		}
-		else
+		else {
+			// mysql_close($connection);
 			return FALSE;
+		}
 	}
 	else
 		return FALSE;
@@ -51,7 +55,7 @@ function generate_session(){
 			$host = gethostname();
 			$value = $username.$host.$time_now.$date_now.$microtime;
 			$value = hash('sha256', $value);
-			$expire = time()+3600*24*365*10;	//default
+			$expire = time()+3600*24*365*10;	
 			$path = NULL;
 			$domain = NULL;
 			$secure = TRUE;	// Indicates that the cookie should only be transmitted over a secure HTTPS connection from the client
@@ -61,12 +65,18 @@ function generate_session(){
 			$query_update = mysql_query("UPDATE user SET token ='$value' WHERE id=$user_id", $connection);
 			if ($query_update) {
 				setcookie($name, $value, $expire, $path, $domain, $secure, $httponly);
+				// mysql_close($connection);
 				return TRUE;
 			}
-			else
+			else {
+				// mysql_close($connection);
 				return FALSE;
+			}
 		}
-		return TRUE;
+		else {
+			mysql_close($connection);
+			return FALSE;
+		}
 	}
 	else
 		return FALSE;
@@ -82,6 +92,8 @@ function checkToGenerateSession() {
 	}
 	else
     	$isLogin = FALSE;
+
+    //mysql_close($connection);
     return $isLogin;
 }
 

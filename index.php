@@ -43,12 +43,12 @@
 
   $isLogin = checkToGenerateSession();
    
-   // Query to display list post
-   $query="SELECT * FROM `post`;";
-   $query = preventSQLInject($query);
-   $result=mysql_query($query) or trigger_error(mysql_error()." in ".$query);
-   
-   $num=mysql_num_rows($result);
+  // Query to display list post
+  $query="SELECT * FROM `post`";
+  $query = preventSQLInject($query);
+  $result=mysql_query($query) or trigger_error(mysql_error()." in ".$query);
+
+  $num=mysql_num_rows($result);
 ?>
 	
 <div class="wrapper">

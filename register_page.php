@@ -1,6 +1,7 @@
 <?php
 	include('register.php'); // Includes Login Script
 	include('session.php');
+	include('connectDB.php');
 
 	// If session is set, redirect to index.php
 	$isLogin = checkToGenerateSession();
@@ -109,5 +110,10 @@
 		      z.parentNode.insertBefore(t,z)}(window,document,'script','ga'));
 		      ga('create',ga_ua);ga('send','pageview');
 		</script>
+
+		<?php
+			mysql_close($con);
+		?>
+		
 	</body>
 </html>

@@ -7,6 +7,22 @@
 	$komentar = $_GET['komentar'];
 	$email = $_GET['email'];
 
+	// To protect MySQL injection for Security purpose
+	$id = stripslashes($id);
+	$nama = stripslashes($nama);
+	$komentar = stripslashes($komentar);
+	$email = stripslashes($email);
+	$id = mysql_real_escape_string($id);
+	$nama = mysql_real_escape_string($nama);
+	$komentar = mysql_real_escape_string($komentar);
+	$email = mysql_real_escape_string($email);
+
+	// To protect from XSS
+	$id = htmlspecialchars($id, ENT_QUOTES, 'UTF-8');
+	$nama = htmlspecialchars($nama, ENT_QUOTES, 'UTF-8');
+	$komentar = htmlspecialchars($komentar, ENT_QUOTES, 'UTF-8');
+	$email = htmlspecialchars($email, ENT_QUOTES, 'UTF-8');
+
 	$query = "INSERT INTO `komentar` (id, nama, email, komentar) VALUES ('{$id}', '{$nama}', '{$email}', '{$komentar}')";
 	$result = mysql_query($query) or die(mysql_error());
 

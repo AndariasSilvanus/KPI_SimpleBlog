@@ -27,6 +27,10 @@
 			$username = mysql_real_escape_string($username);
 			$password = mysql_real_escape_string($password);
 
+			// To protect from XSS
+			$username = htmlspecialchars($username, ENT_QUOTES, 'UTF-8');
+			$password = htmlspecialchars($password, ENT_QUOTES, 'UTF-8');
+
 			// Add salt and hashing with SHA 256
 			$password_hashed = hashSalt($password);
 

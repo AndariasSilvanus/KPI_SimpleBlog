@@ -1,6 +1,27 @@
+# redirect HTTP to HTTPS
 RewriteEngine On
 RewriteCond %{HTTPS} !on
 RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+
+# set cookie to httpOnly cookie
 <IfModule php5_module>
     php_flag session.cookie_httponly on
 </IfModule>
+
+# deny htaccess file
+<Files ~ "^\.htaccess">
+  Order allow,deny
+  Deny from all
+</Files>
+
+ErrorDocument 404 error_page.php
+DirectoryIndex index.php
+
+# disable directory browsing
+Options All -Indexes
+
+# Block Access to a Comprehensive Range of Files
+<FilesMatch ".(htaccess|htpasswd|ini|phps|jpg|jpeg|png|gif|fla|psd|log|sh)$">
+ Order Allow,Deny
+ Deny from all
+</FilesMatch>

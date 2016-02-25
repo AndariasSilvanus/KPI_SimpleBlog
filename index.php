@@ -84,6 +84,19 @@
       					$f2=mysql_result($result,$i,"konten");
       					$f3=mysql_result($result,$i,"tanggal");
                 $f4=mysql_result($result,$i,"userid");
+
+                // To protect from SQL injection
+                $f0 = preventSQLInject($f0);
+                $f1 = preventSQLInject($f1);
+                $f2 = preventSQLInject($f2);
+                $f3 = preventSQLInject($f3);
+                $f4 = preventSQLInject($f4);
+                // To protect from XSS
+                $f0 = htmlspecialchars($f0, ENT_QUOTES, 'UTF-8');
+                $f1 = htmlspecialchars($f1, ENT_QUOTES, 'UTF-8');
+                $f2 = htmlspecialchars($f2, ENT_QUOTES, 'UTF-8');
+                $f3 = htmlspecialchars($f3, ENT_QUOTES, 'UTF-8');
+                $f4 = htmlspecialchars($f4, ENT_QUOTES, 'UTF-8');
             ?>
           	
             <li class="art-list-item">

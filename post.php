@@ -56,6 +56,20 @@
             $tanggal = $row['tanggal'];
             $konten = $row['konten'];
             $gambar = $row['gambar'];
+
+            // To protect from SQL injection
+            $id_post = preventSQLInject($id_post);
+            $judul = preventSQLInject($judul);
+            $tanggal = preventSQLInject($tanggal);
+            $konten = preventSQLInject($konten);
+            $gambar = preventSQLInject($gambar);
+            // To protect from XSS
+            $id_post = htmlspecialchars($id_post, ENT_QUOTES, 'UTF-8');
+            $judul = htmlspecialchars($judul, ENT_QUOTES, 'UTF-8');
+            $tanggal = htmlspecialchars($tanggal, ENT_QUOTES, 'UTF-8');
+            $konten = htmlspecialchars($konten, ENT_QUOTES, 'UTF-8');
+            $gambar = htmlspecialchars($gambar, ENT_QUOTES, 'UTF-8');
+            
             mysql_close();
         }
         else
